@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal do Bairro</title>
+
+<!-- CSS: aparência do site -->
+<style>
+body {font-family:Arial;margin:0;background:#f1f5f9;color:#222}
+header,footer {background:#14532d;color:white;text-align:center;padding:20px}
+nav {background:#166534;text-align:center;padding:12px}
+nav a {color:white;margin:10px}
+main {max-width:900px;margin:auto;padding:15px}
+section {background:white;padding:20px;margin:15px 0;border-radius:10px}
+h2 {color:#166534}
+.card {background:#dcfce7;padding:12px;margin:8px 0;border-radius:6px}
+input,select,textarea,button {box-sizing:border-box;width:100%;padding:10px;margin:7px 0}
+button {background:#15803d;color:white;border:0;cursor:pointer}
+button:hover {background:#166534}
+:focus-visible {outline:3px solid #2563eb}
+.status {background:#fef3c7;padding:12px;border-radius:6px}
+</style>
+</head>
+
+<body>
+<!-- Apresentação e menu -->
+<header>
+<h1>🏡 Portal de Serviços do Bairro</h1>
+<p>Centro Comunitário União</p>
+</header>
+<nav aria-label="Menu principal">
+<a href="#servicos">Serviços</a>
+<a href="#solicitar">Solicitar</a>
+<a href="#admin">Administração</a>
+<a href="#contato">Contato</a>
+</nav>
+
+<main>
+<!-- Catálogo de serviços -->
+<section id="servicos">
+<h2>Serviços disponíveis</h2>
+<div class="card">📚 Reforço Escolar</div>
+<div class="card">🎨 Oficinas Educativas</div>
+<div class="card">🧰 Empréstimo de Materiais</div>
+<div class="card">🤝 Atendimento Social</div>
+</section>
+
+<!-- Formulário de solicitação -->
+<section id="solicitar">
+<h2>Solicitar Atendimento</h2>
+<form id="formulario">
+<label for="nome">Nome fictício:</label>
+<input id="nome" required>
+<label for="servico">Serviço:</label>
+<select id="servico" required>
+<option value="">Selecione</option>
+<option>Reforço Escolar</option>
+<option>Oficinas</option>
+<option>Empréstimos</option>
+<option>Atendimento Social</option>
+</select>
+<label for="descricao">Descrição:</label>
+<textarea id="descricao" required></textarea>
+<button>Enviar Solicitação</button>
+</form>
+<p id="mensagem" role="status"></p>
+</section>
+
+<!-- Consulta do andamento -->
+<section>
+<h2>Status da Solicitação</h2>
+<div class="status" id="consulta" role="status">Nenhum pedido.</div>
+</section>
+
+<!-- Administração demonstrativa -->
+<section id="admin">
+<h2>Administração (Simulada)</h2>
+<p id="pedidoAdmin">Nenhum pedido.</p>
+<label for="novoStatus">Alterar status:</label>
+<select id="novoStatus">
+<option>Pendente</option>
+<option>Em análise</option>
+<option>Concluída</option>
+</select>
+<button onclick="atualizarStatus()">Atualizar</button>
+</section>
+
+<!-- Perguntas frequentes -->
+<section>
+<h2>Perguntas Frequentes</h2>
+<details><summary>Os serviços são gratuitos?</summary><p>Sim.</p></details>
+<details><summary>Como solicitar?</summary><p>Preencha o formulário.</p></details>
+</section>
+
+<!-- Contato e privacidade -->
+<section id="contato">
+<h2>Contato e Horários</h2>
+<p>📞 (00) 0000-0000 (fictício)</p>
+<p>🕘 Segunda a sexta, das 8h às 17h</p>
+<p>Atendimento alternativo: presencial ou telefone.</p>
+<h3>Privacidade</h3>
+<p>Use apenas dados fictícios. Coletamos nome, serviço e descrição.</p>
+<p>Em um sistema real, cada pessoa veria apenas seus pedidos.
+A administração teria login e acesso mínimo necessário.</p>
+</section>
+</main>
+<footer>Projeto Acadêmico 2026</footer>
+
+<!-- JavaScript: cadastro, consulta e atualização -->
+<script>
+let pedido = null;
+
+// Cadastra uma solicitação com status inicial Pendente
+document.getElementById("formulario").onsubmit = function(e) {
+  e.preventDefault();
+  const nome = document.getElementById("nome").value.trim();
+  const servico = document.getElementById("servico").value;
+  const descricao = document.getElementById("descricao").value.trim();
+  if (!nome || !servico || !descricao) return alert("Preencha tudo!");
+  pedido = {nome, servico, descricao, status:"Pendente"};
+  document.getElementById("mensagem").textContent = "Pedido enviado!";
+  mostrarPedido();
+  this.reset();
+};
+
+// Mostra os dados e o status do pedido
+function mostrarPedido() {
+  document.getElementById("consulta").textContent =
+    pedido.servico + " - " + pedido.status;
+  document.getElementById("pedidoAdmin").textContent =
+    pedido.nome + " - " + pedido.descricao;
+}
+
+// Permite atualizar o status na administração
+function atualizarStatus() {
+  if (!pedido) return alert("Cadastre um pedido primeiro!");
+  pedido.status = document.getElementById("novoStatus").value;
+  mostrarPedido();
+  alert("Status atualizado!");
+}
+</script>
+</body>
+</html>
