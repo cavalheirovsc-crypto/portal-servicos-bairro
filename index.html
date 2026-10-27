@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Portal do Bairro</title>
 
-<!-- CSS: aparência do site -->
+<!-- CSS: aparência do portal -->
 <style>
 body {font-family:Arial;margin:0;background:#f1f5f9;color:#222}
 header,footer {background:#14532d;color:white;text-align:center;padding:20px}
@@ -15,44 +15,71 @@ nav a {color:white;margin:10px}
 main {max-width:900px;margin:auto;padding:15px}
 section {background:white;padding:20px;margin:15px 0;border-radius:10px}
 h2 {color:#166534}
-.card {background:#dcfce7;padding:12px;margin:8px 0;border-radius:6px}
 input,select,textarea,button {box-sizing:border-box;width:100%;padding:10px;margin:7px 0}
-button {background:#15803d;color:white;border:0;cursor:pointer}
+button {background:#15803d;color:white;border:0;cursor:pointer;border-radius:6px}
 button:hover {background:#166534}
 :focus-visible {outline:3px solid #2563eb}
 .status {background:#fef3c7;padding:12px;border-radius:6px}
+[hidden] {display:none !important}
+
+/* Cartões de serviços clicáveis */
+.card {
+  background:#dcfce7;
+  color:#14532d;
+  text-align:left;
+  font-weight:bold;
+  padding:15px;
+  margin:8px 0;
+}
+.card:hover {background:#bbf7d0}
 </style>
 </head>
 
 <body>
-<!-- Apresentação e menu -->
+<!-- Cabeçalho e menu -->
 <header>
 <h1>🏡 Portal de Serviços do Bairro</h1>
 <p>Centro Comunitário União</p>
 </header>
+
 <nav aria-label="Menu principal">
 <a href="#servicos">Serviços</a>
 <a href="#solicitar">Solicitar</a>
-<a href="#admin">Administração</a>
+<a href="#acessoAdmin">Administração</a>
 <a href="#contato">Contato</a>
 </nav>
 
 <main>
-<!-- Catálogo de serviços -->
+
+<!-- Catálogo de serviços clicáveis -->
 <section id="servicos">
 <h2>Serviços disponíveis</h2>
-<div class="card">📚 Reforço Escolar</div>
-<div class="card">🎨 Oficinas Educativas</div>
-<div class="card">🧰 Empréstimo de Materiais</div>
-<div class="card">🤝 Atendimento Social</div>
+
+<button type="button" class="card" onclick="selecionarServico('Reforço Escolar')">
+📚 Reforço Escolar
+</button>
+
+<button type="button" class="card" onclick="selecionarServico('Oficinas')">
+🎨 Oficinas Educativas
+</button>
+
+<button type="button" class="card" onclick="selecionarServico('Empréstimos')">
+🧰 Empréstimo de Materiais
+</button>
+
+<button type="button" class="card" onclick="selecionarServico('Atendimento Social')">
+🤝 Atendimento Social
+</button>
 </section>
 
 <!-- Formulário de solicitação -->
 <section id="solicitar">
 <h2>Solicitar Atendimento</h2>
 <form id="formulario">
+
 <label for="nome">Nome fictício:</label>
 <input id="nome" required>
+
 <label for="servico">Serviço:</label>
 <select id="servico" required>
 <option value="">Selecione</option>
@@ -61,37 +88,60 @@ button:hover {background:#166534}
 <option>Empréstimos</option>
 <option>Atendimento Social</option>
 </select>
+
 <label for="descricao">Descrição:</label>
 <textarea id="descricao" required></textarea>
-<button>Enviar Solicitação</button>
+
+<button type="submit">Enviar Solicitação</button>
 </form>
 <p id="mensagem" role="status"></p>
 </section>
 
-<!-- Consulta do andamento -->
+<!-- Consulta do status -->
 <section>
 <h2>Status da Solicitação</h2>
-<div class="status" id="consulta" role="status">Nenhum pedido.</div>
+<div class="status" id="consulta" role="status">
+Nenhum pedido.
+</div>
 </section>
 
-<!-- Administração demonstrativa -->
-<section id="admin">
+<!-- Acesso à administração simulada -->
+<section id="acessoAdmin">
+<h2>Área Administrativa</h2>
+<p>Área demonstrativa para acompanhar solicitações.</p>
+<button type="button" onclick="mostrarAdmin()">
+Acessar Administração (Simulada)
+</button>
+</section>
+
+<!-- Administração inicialmente escondida -->
+<section id="admin" hidden>
 <h2>Administração (Simulada)</h2>
 <p id="pedidoAdmin">Nenhum pedido.</p>
+
 <label for="novoStatus">Alterar status:</label>
 <select id="novoStatus">
 <option>Pendente</option>
 <option>Em análise</option>
 <option>Concluída</option>
 </select>
-<button onclick="atualizarStatus()">Atualizar</button>
+
+<button type="button" onclick="atualizarStatus()">
+Atualizar
+</button>
 </section>
 
 <!-- Perguntas frequentes -->
 <section>
 <h2>Perguntas Frequentes</h2>
-<details><summary>Os serviços são gratuitos?</summary><p>Sim.</p></details>
-<details><summary>Como solicitar?</summary><p>Preencha o formulário.</p></details>
+<details>
+<summary>Os serviços são gratuitos?</summary>
+<p>Sim, todos são gratuitos.</p>
+</details>
+<details>
+<summary>Como solicitar atendimento?</summary>
+<p>Selecione um serviço e preencha o formulário.</p>
+</details>
 </section>
 
 <!-- Contato e privacidade -->
@@ -100,45 +150,90 @@ button:hover {background:#166534}
 <p>📞 (00) 0000-0000 (fictício)</p>
 <p>🕘 Segunda a sexta, das 8h às 17h</p>
 <p>Atendimento alternativo: presencial ou telefone.</p>
+
 <h3>Privacidade</h3>
-<p>Use apenas dados fictícios. Coletamos nome, serviço e descrição.</p>
-<p>Em um sistema real, cada pessoa veria apenas seus pedidos.
-A administração teria login e acesso mínimo necessário.</p>
+<p>Use somente dados fictícios. Coletamos nome, serviço e descrição.</p>
+<p>Em um sistema real, cada morador veria apenas seus pedidos.
+A administração teria login e permissões específicas.</p>
 </section>
+
 </main>
 <footer>Projeto Acadêmico 2026</footer>
 
-<!-- JavaScript: cadastro, consulta e atualização -->
+<!-- JavaScript: funcionalidades -->
 <script>
 let pedido = null;
 
-// Cadastra uma solicitação com status inicial Pendente
+// Seleciona o serviço e direciona ao formulário
+function selecionarServico(servico) {
+  document.getElementById("servico").value = servico;
+  document.getElementById("solicitar").scrollIntoView({
+    behavior: "smooth"
+  });
+  document.getElementById("nome").focus({
+    preventScroll: true
+  });
+}
+
+// Mostra ou esconde a administração
+function mostrarAdmin() {
+  const admin = document.getElementById("admin");
+  admin.hidden = !admin.hidden;
+}
+
+// Cadastra e salva uma solicitação
 document.getElementById("formulario").onsubmit = function(e) {
   e.preventDefault();
+
   const nome = document.getElementById("nome").value.trim();
   const servico = document.getElementById("servico").value;
   const descricao = document.getElementById("descricao").value.trim();
-  if (!nome || !servico || !descricao) return alert("Preencha tudo!");
+
+  if (!nome || !servico || !descricao) {
+    return alert("Preencha todos os campos!");
+  }
+
   pedido = {nome, servico, descricao, status:"Pendente"};
-  document.getElementById("mensagem").textContent = "Pedido enviado!";
+
+  localStorage.setItem("pedido", JSON.stringify(pedido));
+
+  document.getElementById("mensagem").textContent =
+    "Pedido enviado com sucesso!";
+
   mostrarPedido();
   this.reset();
 };
 
-// Mostra os dados e o status do pedido
+// Exibe o pedido e seu status
 function mostrarPedido() {
   document.getElementById("consulta").textContent =
     pedido.servico + " - " + pedido.status;
+
   document.getElementById("pedidoAdmin").textContent =
     pedido.nome + " - " + pedido.descricao;
 }
 
-// Permite atualizar o status na administração
+// Atualiza e salva o novo status
 function atualizarStatus() {
-  if (!pedido) return alert("Cadastre um pedido primeiro!");
-  pedido.status = document.getElementById("novoStatus").value;
+  if (!pedido) {
+    return alert("Cadastre um pedido primeiro!");
+  }
+
+  pedido.status =
+    document.getElementById("novoStatus").value;
+
+  localStorage.setItem("pedido", JSON.stringify(pedido));
+
   mostrarPedido();
   alert("Status atualizado!");
+}
+
+// Recupera a solicitação ao abrir a página
+const pedidoSalvo = localStorage.getItem("pedido");
+
+if (pedidoSalvo) {
+  pedido = JSON.parse(pedidoSalvo);
+  mostrarPedido();
 }
 </script>
 </body>
